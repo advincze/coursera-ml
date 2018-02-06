@@ -63,6 +63,26 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+Z2 = [ones(size(X, 1), 1) X] *Theta1';
+A2 = sigmoid(Z2);
+
+Z3 = [ones(size(A2, 1), 1) A2] *Theta2';
+h = sigmoid(Z3);
+
+yy = zeros(m,num_labels);
+for i = 1:m
+	yy(i,y(i)) = 1;
+end
+
+
+temp1 = Theta1.^2;
+temp1(:,1) = 0;
+temp2 = Theta2.^2;
+temp2(:,1) = 0;
+reg = lambda/(2*m) * ( sum(sum(temp1)) + sum(sum(temp2)) );
+
+J = 1/m * sum( sum( - yy .* log(h)  - (1-yy) .* log(1 - h) )) + reg;
+
 
 
 
