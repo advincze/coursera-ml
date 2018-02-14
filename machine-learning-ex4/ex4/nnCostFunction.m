@@ -83,8 +83,32 @@ reg = lambda/(2*m) * ( sum(sum(temp1)) + sum(sum(temp2)) );
 
 J = 1/m * sum( sum( - yy .* log(h)  - (1-yy) .* log(1 - h) )) + reg;
 
+%loop over training examples
+
+delta1 = 0;
+delta2 = 0;
 
 
+for t = 1:m
+	x = [1; X(t,:)']; %row vector with training example 1 with bias
+	z2 = Theta1 * x;
+	a2 = sigmoid(z2);
+	a2 = [1; a2];
+	
+	z3 = Theta2 * a2;
+	a3 = sigmoid(z3);
+	
+	d3 = a3 - yy(t,:)';
+	
+	d2 = ( Theta2(:, 2:end)' * d3) .* sigmoidGradient(z2);
+	
+
+	delta2 += (d3 * a2');
+	delta1 += (d2 * x');
+end
+
+Theta1_grad = (1 / m) * delta1;
+Theta2_grad = (1 / m) * delta2;
 
 
 
