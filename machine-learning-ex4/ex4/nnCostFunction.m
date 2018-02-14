@@ -112,7 +112,10 @@ Theta1_grad = (1 / m) * delta1;
 Theta2_grad = (1 / m) * delta2;
 
 
+% regularizaton from last week : grad = .... + lambda/m * theta
 
+ Theta1_grad += lambda/m * Theta1;
+ Theta2_grad += lambda/m * Theta2;
 
 
 
