@@ -89,6 +89,8 @@ delta1 = 0;
 delta2 = 0;
 
 
+Theta2NoBiasTransp = Theta2(:, 2:end)';
+
 for t = 1:m
 	x = [1; X(t,:)']; %row vector with training example 1 with bias
 	z2 = Theta1 * x;
@@ -100,11 +102,10 @@ for t = 1:m
 	
 	d3 = a3 - yy(t,:)';
 	
-	d2 = ( Theta2(:, 2:end)' * d3) .* sigmoidGradient(z2);
-	
+	d2 = ( Theta2NoBiasTransp * d3) .* sigmoidGradient(z2);
 
-	delta2 += (d3 * a2');
-	delta1 += (d2 * x');
+	delta2 += d3 * a2';
+	delta1 += d2 * x';
 end
 
 Theta1_grad = (1 / m) * delta1;
